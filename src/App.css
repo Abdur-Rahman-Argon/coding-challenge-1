@@ -41,14 +41,21 @@
   width: 200px;
   padding: 4px;
 }
+
+.input-select {
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  width: 200px;
+  padding: 4px;
+}
+
+
 .input-checkbox {
   font-size: 30px;
   cursor: pointer;
 }
-
-.input-select {
-  font-size: 15px;
-}
+ 
 
 .submit {
   font-size: 18px;
@@ -64,17 +71,17 @@
   padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media screen and (max-width: 600px)  {
+  .from-container {
+    width: 250px;
+    margin: auto;
   }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media screen and (max-width: 900px)  {
+  .from-container {
+    width: 500px;
+    margin: auto;
   }
 }
+
