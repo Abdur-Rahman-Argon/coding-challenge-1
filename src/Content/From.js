@@ -5,28 +5,30 @@ const From = () => {
   const [insertedId, setInsertedId] = useState();
   const [options, setOptions] = useState([]);
   const [userData, setUserData] = useState({});
+  const [name, setName] = useState(userData.name || "");
+  const [terms, setTerms] = useState(userData.terms || false);
+  const [sectors, setSectors] = useState(userData.sectors);
 
   // select option get from data base
   useEffect(() => {
-    fetch("http://localhost:5000/sectors")
+    fetch("https://coding-challange-server.onrender.com/sectors")
       .then((res) => res.json())
       .then((data) => setOptions(data));
   }, []);
 
   // select option get from data base
   useEffect(() => {
-    // fetch(`http://localhost:5000/get-user/${insertedId}`)
-    fetch("http://localhost:5000/user-data")
+    // fetch(`https://coding-challange-server.onrender.com/get-user/${insertedId}`)
+    fetch("https://coding-challange-server.onrender.com/user-data")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.slice(-1)[0]);
         setUserData(data.slice(-1)[0]);
+        setName(data.slice(-1)[0].name);
+        setTerms(data.slice(-1)[0].terms);
+        setSectors(data.slice(-1)[0].sectors);
       });
   }, []);
-
-  const [name, setName] = useState(userData.name || "");
-  const [terms, setTerms] = useState(userData.terms || false);
-  const [sectors, setSectors] = useState(userData.sectors);
 
   // from submit
   const fromSubmit = (e) => {
@@ -38,7 +40,7 @@ const From = () => {
     };
 
     // user data post on data base
-    fetch("http://localhost:5000/create-user-data", {
+    fetch("https://coding-challange-server.onrender.com/create-user-data", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -72,7 +74,7 @@ const From = () => {
             <input
               type="text"
               name="name"
-              value={" " && (name || userData.name)}
+              value={name}
               onChange={(e) => setName(e.target.value)}
               className="input-field"
               required
@@ -84,7 +86,7 @@ const From = () => {
             <label className="input-label"> Sectors:</label>
             <Multiselect
               options={options}
-              selectedValues={sectors || userData.sectors}
+              selectedValues={sectors}
               onSelect={(e) => setSectors(e)}
               onRemove={(e) => setSectors(e)}
               displayValue="name"
