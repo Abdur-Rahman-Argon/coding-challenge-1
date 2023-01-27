@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Multiselect from "multiselect-react-dropdown";
 
-const From = () => {
+const Test = () => {
   const [insertedId, setInsertedId] = useState();
   const [options, setOptions] = useState([]);
   const [userData, setUserData] = useState({});
@@ -12,12 +13,24 @@ const From = () => {
   useEffect(() => {
     fetch("https://coding-challange-server.onrender.com/sectors")
       .then((res) => res.json())
+      .then((data) => setOptions(data));
+  }, []);
+
+  // select option get from data base
+  useEffect(() => {
+    // fetch(`https://coding-challange-server.onrender.com/get-user/${insertedId}`)
+    fetch("https://coding-challange-server.onrender.com/user-data")
+      .then((res) => res.json())
       .then((data) => {
-        setOptions(data);
-        console.log(data);
+        console.log(data.slice(-1)[0]);
+        setUserData(data.slice(-1)[0]);
+        setName(data.slice(-1)[0].name);
+        setTerms(data.slice(-1)[0].terms);
+        setSectors(data.slice(-1)[0].sectors);
       });
   }, []);
 
+  // from submit
   const fromSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -25,6 +38,7 @@ const From = () => {
       terms: terms,
       sectors: sectors,
     };
+
     // user data post on data base
     fetch("https://coding-challange-server.onrender.com/create-user-data", {
       method: "POST",
@@ -41,7 +55,6 @@ const From = () => {
         }
       });
     setUserData(data);
-    console.log(data);
   };
 
   return (
@@ -68,27 +81,27 @@ const From = () => {
             />
           </div>
 
+          {/* multiple select items */}
           <div className="input-row">
-            <label className="input-label">Sectors:</label>
-
-            <select
-              className="input-select"
-              value={sectors}
-              onChange={(e) => setSectors(e.target.value)}
-            >
-              {options?.map((s) => (
-                <option
-                  className={` ${s.group ? "group-option" : "option"} `}
-                  title={s.name}
-                  value={s.name}
-                  key={s.name}
-                  id={s.name}
-                  disabled={s.group}
-                >
-                  {s.name}
-                </option>
-              ))}
-            </select>
+            <label className="input-label"> Sectors:</label>
+            <Multiselect
+              options={options}
+              selectedValues={sectors}
+              onSelect={(e) => setSectors(e)}
+              onRemove={(e) => setSectors(e)}
+              displayValue="name"
+              selectionLimit={5}
+              style={{
+                searchBox: {
+                  fontSize: "15px",
+                  borderRadius: "5px",
+                  border: "2px solid gray",
+                  width: "200px",
+                  padding: " 4px",
+                  backgroundColor: " white",
+                },
+              }}
+            />
           </div>
 
           {/* terms check */}
@@ -106,7 +119,7 @@ const From = () => {
           {/* submit button */}
           <div className="input-row">
             <input
-              disabled={!sectors}
+              disabled={sectors?.length < 1}
               type="submit"
               value="Save"
               className=" submit"
@@ -118,4 +131,4 @@ const From = () => {
   );
 };
 
-export default From;
+export default Test;

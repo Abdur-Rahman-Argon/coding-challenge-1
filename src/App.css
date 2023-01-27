@@ -1,10 +1,11 @@
 .from-container {
-  width: 800px;
+  width: 500px;
   margin: auto;
-  border: 1px solid gray;
+  border: 1px solid rgb(197, 196, 196);
   border-radius: 10px;
   padding: 20px;
-  background-color: rgb(129, 241, 185);
+  background-color: rgb(146, 253, 200);
+  box-shadow: 8px 5px 10px rgb(187, 186, 186);
   
 }
 
@@ -15,7 +16,7 @@
 
 .from-heading {
   text-align: center;
-  font-size: 23px;
+  font-size: 18px;
   font-weight: 600px;
   margin: 16px 0 35px 0;
 }
@@ -50,6 +51,20 @@
   padding: 4px;
 }
 
+.group-option {
+  font-size: 15px;
+  border: 1px solid gray;
+  background-color: rgb(207, 211, 208);
+ padding-left: 10px;
+ font-size: 16px;
+ font-weight: 600;
+}
+
+.option {
+  font-size: 15px;
+ 
+}
+
 
 .input-checkbox {
   font-size: 30px;
@@ -60,7 +75,7 @@
 .submit {
   font-size: 18px;
   padding: 3px 30px 3px 30px;
-  background: rgb(29, 163, 25);
+  background: rgb(99, 127, 252);
   border: 1px solid gray;
   border-radius: 6px;
   cursor: pointer;
